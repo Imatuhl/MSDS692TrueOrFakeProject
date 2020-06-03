@@ -1,0 +1,87 @@
+This is the code for Cleaning the data sets
+
+merged['text'] = merged['text']+ " " +merged['title']
+del merged['title']
+del merged['subject']
+del merged['date']
+
+stop = set(stopwords.words('english'))
+punctuation = list(string.punctuation)
+stop.update(punctuation)
+
+
+## Fake or True News
+
+def strip_html(text):
+    soup = BeautifulSoup(text, "html.parser")
+    return soup.get_text()
+
+def remove_between_square_brackets(text):
+    return re.sub('\[[^]]*\]', '', text)
+
+def remove_between_square_brackets(text):
+    return re.sub(r'http\S+', ' ',text)
+
+def remove_stopwords(text):
+    final_text = []
+    for i in text.split():
+        if i.strip().lower() not in stop:
+            final_text.append(i.strip())
+    return " ".join(final_text)
+
+def denoise_text(text):
+    text = strip_html(text)
+    text = remove_between_square_brackets(text)
+    text = remove_stopwords(text)
+    return text
+
+merged['text']=merged['text'].apply(denoise_text)
+
+
+## BBC Data
+def strip_html(bbctext):
+    soup = BeautifulSoup(bbctext, "html.parser")
+    return soup.get_text()
+
+def remove_between_square_brackets(bbctext):
+    return re.sub('\[[^]]*\]', '', bbctext)
+
+def remove_between_square_brackets(bbctext):
+    return re.sub(r'http\S+', ' ',bbctext)
+
+def remove_stopwords(bbctext):
+    bbcfinal_text = []
+    for i in bbctext.split():
+        if i.strip().lower() not in stop:
+            bbcfinal_text.append(i.strip())
+    return " ".join(bbcfinal_text)
+
+def denoise_text(bbctext):
+    bbctext = strip_html(bbctext)
+    bbctext = remove_between_square_brackets(bbctext)
+    bbctext = remove_stopwords(bbctext)
+    return bbctext
+
+bbc['Text']=bbc['Text'].apply(denoise_text)
+
+## Splitting the data
+xtrain, xtest, ytrain, ytest = train_test_split(merged.text, merged.category, test_size= 0.2, random_state=2020)
+
+
+## Tokenizing the Data
+maxword = 10000
+length = 400
+
+tokenizer = Tokenizer(num_words=maxword)
+tokenizer.fit_on_texts(xtrain)
+
+traintoken = tokenizer.texts_to_sequences(xtrain)
+tokentest = tokenizer.texts_to_sequences(xtest)
+
+X_train = sequence.pad_sequences(traintoken, maxlen =length)
+X_test = sequence.pad_sequences(tokentest, maxlen =length)
+
+## Creating Vocab for embedding layer
+vocab_size = len(tokenizer.word_index)+1
+
+embedding_dim = 50
