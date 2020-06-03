@@ -1,0 +1,85 @@
+## This section is the code for data exploration
+
+factual = pd.read_csv("/kaggle/input/fake-and-real-news-dataset/True.csv")
+fakenews = pd.read_csv("/kaggle/input/fake-and-real-news-dataset/Fake.csv")
+bbc = pd.read_csv("/kaggle/input/bbcalldata2/BBCAll.csv")
+
+fakenews.head()
+factual.head()
+bbc.head()
+
+for key, count in fakenews.subject.value_counts().iteritems():
+    print(f"{key}:\t{count}")
+    
+print(f"Total Records:\t{fakenews.shape[0]}")
+
+for key, count in factual.subject.value_counts().iteritems():
+    print(f"{key}:\t{count}")
+    
+print(f"Total Records:\t{factual.shape[0]}")
+
+for key, count in bbc.Category.value_counts().iteritems():
+    print(f"{key}:\t{count}")
+
+print(f"Total Records:\t{bbc.shape[0]}")
+
+plt.figure(figsize=(10,5))
+sns.countplot("subject", data=fakenews)
+plt.show()
+
+plt.figure(figsize=(5,5))
+sns.countplot("subject", data=factual)
+plt.show()
+
+plt.figure(figsize=(10,5))
+sns.countplot("Category", data=bbc)
+plt.show()
+
+text = " ".join(str(each) for each in fakenews.text.unique())
+wordcloud = WordCloud(
+    max_words=200,
+    colormap='Set3',
+    background_color="black",
+    stopwords = set(nltk.corpus.stopwords.words("english"))).generate(text)
+plt.figure(figsize=(15,10))
+plt.imshow(wordcloud, interpolation='Bilinear')
+plt.axis("off")
+plt.figure(1,figsize=(12, 12))
+plt.show()
+
+text = " ".join(str(each) for each in factual.text.unique())
+wordcloud = WordCloud(
+    max_words=200,
+    colormap='Set3',
+    background_color="black",
+    stopwords = set(nltk.corpus.stopwords.words("english"))).generate(text)
+plt.figure(figsize=(15,10))
+plt.imshow(wordcloud, interpolation='Bilinear')
+plt.axis("off")
+plt.figure(1,figsize=(12, 12))
+plt.show()
+
+bbctext = " ".join(str(each) for each in bbc.Text.unique())
+wordcloud = WordCloud(
+    max_words=200,
+    colormap='Set3',
+    background_color="black",
+    stopwords = set(nltk.corpus.stopwords.words("english"))).generate(bbctext)
+plt.figure(figsize=(15,10))
+plt.imshow(wordcloud, interpolation='Bilinear')
+plt.axis("off")
+plt.figure(1,figsize=(12, 12))
+plt.show()
+
+factual['category'] = 1
+fakenews['category'] = 0
+bbc['category'] = 2
+
+merged = pd.concat([factual,fakenews])
+
+sns.set_style('dark')
+sns.countplot(merged.category)
+
+plt.figure(figsize=(10,10))
+sns.countplot(x= 'subject', hue = 'category' , data=merged, palette = 'muted')
+plt.show()
