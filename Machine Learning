@@ -1,0 +1,37 @@
+fakenews['target'] = 'fake'
+factual['target'] = 'true'
+concat = pd.concat([factual,fakenews])
+
+concat.head()
+
+concat = concat.drop(columns='category')
+concat.head()
+
+x_svmtrain, x_svmtest, y_svmtrain, y_svmtest = train_test_split(concat['text'],concat.target, test_size=0.15, random_state=0)
+
+svmnews = Pipeline([('vect', CountVectorizer()),
+                   ('tfidf', TfidfTransformer()),
+                   ('svmmodel', LinearSVC())])
+
+svmmodel = svmnews.fit(x_svmtrain, y_svmtrain)
+svm_pred = svmnews.predict(x_svmtest)
+print("accuracy: {}%".format(round(accuracy_score(y_svmtest, svm_pred)*100,2)))
+print(classification_report(y_svmtest, svm_pred))
+
+nbnews = Pipeline([('vect', CountVectorizer()),
+                   ('tfidf', TfidfTransformer()),
+                   ('nbmodel', BernoulliNB())])
+
+nbmodel = nbnews.fit(x_svmtrain, y_svmtrain)
+nb_pred = nbnews.predict(x_svmtest)
+print("accuracy: {}%".format(round(accuracy_score(y_svmtest, nb_pred)*100,2)))
+print(classification_report(y_svmtest, nb_pred))
+
+lognews = Pipeline([('vect', CountVectorizer()),
+                   ('tfidf', TfidfTransformer()),
+                   ('logmodel', LogisticRegression())])
+
+logmodel = lognews.fit(x_svmtrain, y_svmtrain)
+log_pred = lognews.predict(x_svmtest)
+print("accuracy: {}%".format(round(accuracy_score(y_svmtest, log_pred)*100,2)))
+print(classification_report(y_svmtest, log_pred))
