@@ -1,0 +1,7 @@
+### This is a list of references used to work on my project
+
+#Keras, D. (Ed.). (2020). This example demonstrates the use of Convolution1D for text classification. Retrieved June 01, 2020, from https://keras.io/examples/imdb_cnn/
+#Bisaillon, C. (2020, March 26). Fake and real news dataset. Retrieved June 01, 2020, from https://www.kaggle.com/clmentbisaillon/fake-and-real-news-dataset
+#Madz2000, M. (2020, May 27). NLP using GloVe Embeddings(99.8% Accuracy). Retrieved June 24, 2020, from https://www.kaggle.com/madz2000/nlp-using-glove-embeddings-99-8-accuracy
+#Jatana, V. (2020, May 10). Text Classification From Scratch. Retrieved June 01, 2020, from https://www.kaggle.com/vanshjatana/text-classification-from-scratch
+#Bedi, G. (2019, July 23). Simple guide to Text Classification(NLP) using SVM and Naive Bayes with Python. Retrieved June 01, 2020, from https://medium.com/@bedigunjit/simple-guide-to-text-classification-nlp-using-svm-and-naive-bayes-with-python-421db3a72d34
