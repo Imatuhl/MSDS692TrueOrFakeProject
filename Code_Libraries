@@ -18,34 +18,45 @@ for dirname, _, filenames in os.walk('/kaggle/input'):
 
 ## Here I am importing the necessary libraries to being the project 
 
+import keras
+import tensorflow as tf
+from tensorflow.keras import backend as K
+from tensorflow.keras import backend, models, layers, optimizers, regularizers
+from tensorflow.keras.layers import Input, Concatenate, Dense, Dropout, Flatten, Activation
+from tensorflow.keras.layers import Conv1D, MaxPooling1D
+from tensorflow.keras.models import Model
+from tensorflow.keras.layers import BatchNormalization
+from tensorflow.keras.callbacks import EarlyStopping
+from keras.preprocessing.text import Tokenizer
+from keras.preprocessing import sequence,text
+from keras.utils import to_categorical
+from keras.callbacks import EarlyStopping
+
 import numpy as np
 import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import nltk
+import string
+import re
 from sklearn.preprocessing import LabelBinarizer
 from nltk.corpus import stopwords
 from nltk.stem.porter import PorterStemmer
 from wordcloud import WordCloud,STOPWORDS
-from nltk.stem import WordNetLemmatizer
 from nltk.tokenize import word_tokenize,sent_tokenize
 from bs4 import BeautifulSoup
 import re,string,unicodedata
-from keras.preprocessing import text, sequence
-from nltk.tokenize.toktok import ToktokTokenizer
 from sklearn.metrics import classification_report,confusion_matrix,accuracy_score
 from sklearn.model_selection import train_test_split
+from sklearn.pipeline import Pipeline
+from sklearn.svm import LinearSVC
+from sklearn.linear_model import LogisticRegression
+from sklearn.naive_bayes import BernoulliNB
+from sklearn import model_selection, naive_bayes, svm
+from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer, TfidfTransformer
 from string import punctuation
-from nltk import pos_tag
-from nltk.corpus import wordnet
-import keras
-from keras.models import Sequential
-from keras.models import Model
-from keras.layers import LSTM, Activation, Dense, Dropout, Input, Embedding
-from keras.optimizers import RMSprop
-from keras.preprocessing.text import Tokenizer
-from keras.preprocessing import sequence
-from keras.callbacks import EarlyStopping
-import tensorflow as tf0
+from nltk.corpus import wordnet as wn
+import os
+import sys
 
 ## Follwoing libraries I will import the data and 
