@@ -88,7 +88,7 @@ After achieving a higher rate of accuracy I imported the GloVe embedding data to
 
 Both of these models performed well for this experiment and the difference in performance is negligable. One major difference between the models I observed was the GloVe transfer learning experiment looked to be more stable than the conv1d network. Large spikes in the validation loss of the convolutional network were a frequent occurance when training the model while the GloVe model was very consistant through out training. I created heat maps to better visualize how the models performed. 
 
-![GitHub Logo](/images/conv1dheat.png)
+![GitHub Logo](/images/conv1dheat1.png)
 
 ![GitHub Logo](/images/gloveheat1.png)
 
